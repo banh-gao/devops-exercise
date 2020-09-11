@@ -1,0 +1,17 @@
+- name: Create a new primary partition
+  parted:
+    device: /dev/vdb
+    number: 1
+    state: present
+
+- name: Create a ext4 filesystem on /dev/vdb1
+  filesystem:
+    fstype: ext4
+    dev: /dev/vdb1
+
+- name: Set mount point for docker storage
+  mount:
+    path: /var/lib/docker
+    src: /dev/vdb1
+    fstype: ext4
+    state: mounted
