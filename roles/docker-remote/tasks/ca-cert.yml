@@ -1,0 +1,24 @@
+- name: Generate CA private key
+  openssl_privatekey:
+    path: /etc/ssl/private/swarm_CA.pem
+
+- name: Generate CA signing request
+  openssl_csr:
+    path: /tmp/ssl/swarm_CA.csr
+    privatekey_path: /etc/ssl/private/swarm_CA.pem
+    common_name: "swarm_CA"
+    basic_constraints_critical: yes
+    basic_constraints: ['CA:TRUE']
+
+- name: Generate CA certificate
+  openssl_certificate:
+    path: /etc/ssl/crt/swarm_CA.pem
+    privatekey_path: /etc/ssl/private/swarm_CA.pem
+    csr_path: /tmp/ssl/swarm_CA.csr
+    provider: selfsigned
+
+- name: Download CA certificate locally
+  fetch:
+    src: /etc/ssl/crt/swarm_CA.pem
+    dest: swarm-auth/swarm_CA.pem
+    flat: yes

@@ -1,0 +1,34 @@
+- name: Generate client private key locally
+  become: no
+  delegate_to: localhost
+  openssl_privatekey:
+    path: swarm-auth/key.pem
+
+- name: Generate client CSR locally
+  become: no
+  delegate_to: localhost
+  openssl_csr:
+    path: swarm-auth/client.csr
+    privatekey_path: swarm-auth/key.pem
+    common_name: client
+
+- name: Upload client CSR to server
+  copy:
+    src: swarm-auth/client.csr
+    dest: /tmp/ssl/client.csr
+  
+- name: Generate certificate for client
+  openssl_certificate:
+    path: /tmp/ssl/client.pem
+    csr_path: /tmp/ssl/client.csr
+    ownca_path: /etc/ssl/crt/swarm_CA.pem
+    ownca_privatekey_path: /etc/ssl/private/swarm_CA.pem
+    provider: ownca
+    extended_key_usage:
+      - clientAuth
+
+- name: Download client certificate locally
+  fetch:
+    src: /tmp/ssl/client.pem
+    dest: swarm-auth/cert.pem
+    flat: yes

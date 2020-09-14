@@ -1,0 +1,20 @@
+- name: Generate server private key
+  openssl_privatekey:
+    path: /etc/ssl/private/{{ ansible_fqdn }}.pem
+- name: Generate server CSR
+  openssl_csr:
+    path: /tmp/ssl/{{ ansible_fqdn }}.csr
+    privatekey_path: /etc/ssl/private/{{ ansible_fqdn }}.pem
+    common_name: "{{ ansible_fqdn }}"
+
+- name: Generate server certificate
+  openssl_certificate:
+    path: /etc/ssl/crt/{{ ansible_fqdn }}.pem
+    csr_path: /tmp/ssl/{{ ansible_fqdn }}.csr
+    ownca_path: /etc/ssl/crt/swarm_CA.pem
+    ownca_privatekey_path: /etc/ssl/private/swarm_CA.pem
+    provider: ownca
+    subject_alt_name:
+      - DNS:{{ ansible_fqdn }}
+    extended_key_usage:
+      - serverAuth

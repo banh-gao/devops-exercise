@@ -1,0 +1,9 @@
+docker_service_override: |
+          [Service]
+          ExecStart=
+          ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376
+docker_daemon_config:
+  tlsverify: true
+  tlscacert: "/etc/ssl/crt/swarm_CA.pem"
+  tlscert: "/etc/ssl/crt/{{ ansible_fqdn }}.pem"
+  tlskey: "/etc/ssl/private/{{ ansible_fqdn }}.pem"

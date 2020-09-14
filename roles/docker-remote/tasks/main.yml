@@ -1,0 +1,30 @@
+- include: setup-python-pip.yml
+
+- name: Install required dependencies
+  pip:
+    name: cryptography
+
+- name: Creates private keys directory
+  file:
+    path: /etc/ssl/private
+    state: directory
+    mode: 0775
+    recurse: yes
+
+- name: Creates CSR directory
+  file:
+    path: /tmp/ssl
+    state: directory
+    mode: 0775
+    recurse: yes
+
+- name: Creates certificates directory
+  file:
+    path: /etc/ssl/crt
+    state: directory
+    mode: 0775
+    recurse: yes
+    
+- include: ca-cert.yml
+- include: server-cert.yml
+- include: client-cert.yml
