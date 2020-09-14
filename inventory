@@ -1,0 +1,5 @@
+[docker_swarm_manager]
+node1.test
+
+[docker_swarm_worker]
+node2.test

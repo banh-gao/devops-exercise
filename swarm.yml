@@ -1,6 +1,12 @@
+- name: "Prepare auth material for Docker secure API"
+  hosts: docker_swarm_manager
+  become: yes
+  roles:
+    - role: docker-remote
+
 - name: "Provision Docker Swarm Cluster"
   hosts: all
   become: yes
   roles:
     - role: docker-storage
-    - role: ansible-dockerswarm
+    - role: atosatto.docker-swarm
