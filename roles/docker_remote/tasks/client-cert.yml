@@ -16,7 +16,8 @@
   copy:
     src: swarm-auth/client.csr
     dest: /tmp/ssl/client.csr
-  
+    mode: '0644'
+
 - name: Generate certificate for client
   openssl_certificate:
     path: /tmp/ssl/client.pem

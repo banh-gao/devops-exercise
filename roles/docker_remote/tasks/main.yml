@@ -24,7 +24,7 @@
     state: directory
     mode: 0775
     recurse: yes
-    
+
 - include: ca-cert.yml
 - include: server-cert.yml
 - include: client-cert.yml

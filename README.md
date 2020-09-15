@@ -24,8 +24,8 @@ vagrant up
 
 # Setup con Ansible
 Il playbook `swarm.yml` si occupa di creare un cluster swarm controllabile da remoto con API REST autenticate. In particolare il setup è diviso in tre ruoli:
-- **docker-remote** si occupa di generare le chiavi e i certificati server e client che verranno usati per autenticarsi alle API REST. In una cartella locale genera anche il materiale crittografico necessario per l'autenticazione di un client.
-- **docker-storage** perpara il disco attaccato da Vagrant che verrà montato sulla partizione di storage usata da docker. Questo evita il rischio di saturare lo spazio della partizione di root.
+- **docker_remote** si occupa di generare le chiavi e i certificati server e client che verranno usati per autenticarsi alle API REST. In una cartella locale genera anche il materiale crittografico necessario per l'autenticazione di un client.
+- **docker_storage** perpara il disco attaccato da Vagrant che verrà montato sulla partizione di storage usata da docker. Questo evita il rischio di saturare lo spazio della partizione di root.
 - **ansible-dockerswarm** si occupa del setup di docker e della creazione di un cluster swarm. Per il setup viene usato il ruolo [atosatto.docker-swarm](https://galaxy.ansible.com/atosatto/docker-swarm). Questo ruolo installa docker sui due nodi e crea un cluster Swarm con un manager e un worker.
 
 Prima di eseguire il playbook scaricare le dipendenze da Ansible galaxy:

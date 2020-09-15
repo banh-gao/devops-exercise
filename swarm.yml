@@ -2,11 +2,11 @@
   hosts: docker_swarm_manager
   become: yes
   roles:
-    - role: docker-remote
+    - role: docker_remote
 
 - name: "Provision Docker Swarm Cluster"
   hosts: all
   become: yes
   roles:
-    - role: docker-storage
+    - role: docker_storage
     - role: atosatto.docker-swarm
